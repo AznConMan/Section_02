@@ -1,1 +1,4 @@
-This branch is my own way of creating the bulls and cows game. I am learning from a udemy course, but since I have so experience with programming I am attempting to code the game on my own to see if I can work out the logic. Also as a challenge.
+--This branch is my own way of creating the bulls and cows game. 
+--A challenge to see if I can work the logic out on my own.
+--Nerdokong will be my assistant
+--And maybe the wife
