@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <algorithm>
 
 //notice me senpai
 
@@ -14,16 +15,14 @@ public:
 	std::string GetIsogram();
 	std::string AsciiArt();
 
-	bool IsGameWon() const
-		;
+	bool IsGameWon() const;
 	int GetCurrentTry();
-	bool CheckGuessValidity(std::string);
+	bool isValid(std::string);
 	// Create method for counting bulls and cows, increase turn #
 
 
 private:
-	int MyCurrentTry
-	;
+	int MyCurrentTry;
 	int MyMaxTries; 
 	std::string MyIsogram = "";
 };

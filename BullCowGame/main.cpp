@@ -40,7 +40,15 @@ void PlayGame() {
 		//submit valid guess to the game
 		//print number of bulls and cows
 
-		PrintBack();
+		std::cout << "Your guess was: " << uGuess << std::endl;
+
+		if (BCGame.isValid(uGuess)) {
+			std::cout << "True" << std::endl;
+		}
+		else {
+			std::cout << "False" << std::endl;
+		}
+
 	}
 
 	//TODO Summarise Game
@@ -67,7 +75,7 @@ std::string GetGuess() {
 
 void PrintBack(){
 
-	std::cout << "Your guess was :" << uGuess << std::endl;
+	std::cout << "Your guess was : " << uGuess << std::endl;
 	std::cout << std::endl;
 	return;
 }

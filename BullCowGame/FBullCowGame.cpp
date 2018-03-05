@@ -30,7 +30,16 @@ bool FBullCowGame::IsGameWon() const {
 }
 
 
+bool FBullCowGame::isValid(std::string) {
+	std::string str; 
+	std::sort(str.begin(), str.end());
 
-bool FBullCowGame::CheckGuessValidity(std::string) {
-	return false;
+	for (int i = 0; i < str.length(); i++) {
+		if (str[i] == str[i + 1]) {
+			return false;
+		}
+	}
+	return true;
+
+	for (int i = 0; i )
 }
