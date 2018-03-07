@@ -10,16 +10,11 @@ user interaction. For game logic see the FBullCowGame class.
 using FText = std::string;
 using int32 = int;
 
-FText iAnswer = "Tingle";
-int32 iLength = iAnswer.length();
-FText uGuess = "";
-const int32 uGuesses = 5;
-
 void PrintIntro();
 void PlayGame();
-FText GetGuess();
-void PrintBack(); 
+FText GetValidGuess();
 bool AskToPlayAgain();
+FText SortGuess();
 
 FBullCowGame BCGame; //Instantiate a new game
 
@@ -39,27 +34,24 @@ void PlayGame() {
 
 	BCGame.Reset();
 	int32 MaxTries = BCGame.GetMaxTries();
-	std::cout << MaxTries << std::endl;
 	FBullCowCount BullCowCount;
-
-	std::cout << BullCowCount.Bulls << std::endl;
-	std::cout << BullCowCount.Cows << std::endl;
+	//FIsIsogram IsValidIsogram;
 
 	for (int32 i = 1; i <= MaxTries; i++)
 	{
-		GetGuess();
+		FText Guess = GetValidGuess();
 
-		//submit valid guess to the game
-
-		FBullCowCount BullCowCount = BCGame.SubmitGuess(uGuess);
+		//FBullCowCount BullCowCount = BCGame.SubmitGuess(Guess);
 
 		//print number of bulls and cows
+		std::cout << "Your guess was: " << Guess << std::endl;
 		std::cout << "Bulls = " << BullCowCount.Bulls << std::endl;
-		std::cout << "Cows = " << BullCowCount.Cows << std::endl;
+		std::cout << "Cows = " << BullCowCount.Cows << std::endl << std::endl;
+		//std::cout << BCGame.SortGuess(Guess) << std::endl << std::endl;
+		//std::cout << IsValidIsogram.SortedGuess << std::endl;
 	}
 
 	//TODO Summarise Game
-
 
 	return;
 }
@@ -67,27 +59,53 @@ void PlayGame() {
 void PrintIntro() {
 
 	std::cout << "Welcome to Bulls and Cows, a mediocore word game. \n";
-	std::cout << "Can you guess the " << iLength << " letter isogram I'm thinking off? \n \n";
+	std::cout << "Can you guess the " << BCGame.GetIsogramLength() << " letter isogram I'm thinking off? \n \n";
 	return;
 }
 
-FText GetGuess() {
-
+//Loop continously until there is a valid guess
+FText GetValidGuess() //TODO Change to get valid guess
+{
 	int32 cTry = BCGame.GetCurrentTry();
 	std::cout << "Try " << cTry << ". Enter your guess, biiiiiiiiiiiiiiitc-: ";
-	std::getline(std::cin, uGuess);
 
-	return uGuess;
-}
+	FText Guess = "";
+	std::getline(std::cin, Guess);
 
-void PrintBack(){
+	EGuessStatus Status = BCGame.CheckGuessValidity(Guess);
 
-	std::cout << "Your guess was :" << uGuess << std::endl;
-	std::cout << std::endl;
-	return;
+	//submit valid guess to the game
+	switch (Status)
+	{
+	case EGuessStatus::Wrong_Length:
+		std::cout << "Please enter a " << BCGame.GetIsogramLength() << " letter word \n";
+		break;
+
+	case EGuessStatus::Not_Lowercase:
+		std::cout << "Please use lowercase letters only \n";
+		break;
+
+	case EGuessStatus::NO_K:
+		std::cout << "Please enter an isogram, all letters are unique \n";
+		break;
+
+	case EGuessStatus::Not_Characters:
+		std::cout << "Do not use symbols or numbers \n";
+		break;
+
+	case EGuessStatus::OK:
+		std::cout << "Figure out where to put Submit \n";
+		break;
+
+	default:
+		return Guess; 
+		break;
+	}
+	return Guess;
 }
 
 bool AskToPlayAgain() {
+
 	std::cout << "Do you want to play again? \n";
 	FText Response = "";
 	std::getline(std::cin, Response);
