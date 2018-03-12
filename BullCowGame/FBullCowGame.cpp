@@ -75,36 +75,31 @@ FBullCowCount FBullCowGame::SubmitGuess(FString Guess) {
 	return BullCowCount;
 }
 
-//FIsIsogram FBullCowGame::IsIsogram(FString Guess)
-//{
-//	FIsIsogram IsValidIsogram;
-//
-//	FString SortedGuess = Guess;
-//	sort(Guess.begin(), Guess.end());
-//
-//	for (int32 i = 0; i < Guess.length(); i++)
-//	{
-//		if (Guess[i] == Guess[i + 1])
-//		{
-//			IsValidIsogram.IsIsogram = true;
-//		}
-//		else
-//		{
-//			IsValidIsogram.IsIsogram = false;
-//		}
-//	}
-//	return IsValidIsogram;
-//}
-
 EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const 
 {
-	if (false)//if the guess isn't an isogram
+	bool IsIsogram = true;
+	bool HasUpper = false;
+
+
+	sort(Guess.begin(), Guess.end());
+	for (int32 i = 0; i < Guess.length(); i++)
+	{
+		if (Guess[i] == Guess[i+1]) {
+			IsIsogram = false;
+		}
+
+		else if (isupper(Guess[i])) {
+			HasUpper = true;
+		}
+	}
+
+	if (!IsIsogram)//if the guess isn't an isogram
 	{
 		return EGuessStatus::NO_K;
 	}
-	else if (false)//if it isn't all lower case
+	else if (HasUpper)//if it isn't all lower case
 	{
-		return EGuessStatus::Not_Lowercase;
+		return EGuessStatus::Has_Upper;
 	}
 	else if (Guess.length() != GetIsogramLength())//if the length is wrong 
 	{
@@ -115,19 +110,3 @@ EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const
 		return EGuessStatus::OK;
 	}
 }
-
-//EIsIsogram FBullCowGame::IsIsogram(FString Guess) const
-//{
-//	sort(Guess.begin(), Guess.end());
-//	for (int32 i = 0; i < Guess.length(); i++)
-//	{
-//		if (Guess[i] == Guess[i + 1])
-//		{
-//			return EIsIsogram::NO_K;
-//		}
-//		else
-//		{
-//			return EIsIsogram::OK;
-//		}
-//	}
-//}

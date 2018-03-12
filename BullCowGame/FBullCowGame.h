@@ -11,26 +11,15 @@ struct FBullCowCount
 	int32 Cows = 0;
 };
 
-//struct FIsIsogram
-//{
-//	FString SortedGuess;
-//	bool IsIsogram;
-//};
-
 enum class EGuessStatus 
 {
+	Check,
 	OK, 
 	NO_K,
-	Not_Lowercase,
+	Has_Upper,
 	Not_Characters,
 	Wrong_Length
 };
-
-//enum class EIsIsogram
-//{
-//	OK,
-//	NO_K
-//};
 
 class FBullCowGame 
 {
@@ -50,13 +39,12 @@ public:
 	FString SortGuess(FString Guess);
 
 	bool IsGameWon() const;
-	
+
 	// Counts bulls and cows, increase turn #, assume valid guess
 	FBullCowCount SubmitGuess(FString Guess);
-	//FIsIsogram IsIsogram(FString Guess);
 
 	EGuessStatus CheckGuessValidity(FString Guess) const;
-	//EIsIsogram IsIsogram(FString Guess) const;
+
 
 private:
 	int32 MyCurrentTry;

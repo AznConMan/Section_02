@@ -14,7 +14,6 @@ void PrintIntro();
 void PlayGame();
 FText GetValidGuess();
 bool AskToPlayAgain();
-FText SortGuess();
 
 FBullCowGame BCGame; //Instantiate a new game
 
@@ -41,7 +40,7 @@ void PlayGame() {
 	{
 		FText Guess = GetValidGuess();
 
-		//FBullCowCount BullCowCount = BCGame.SubmitGuess(Guess);
+		FBullCowCount BullCowCount = BCGame.SubmitGuess(Guess);
 
 		//print number of bulls and cows
 		std::cout << "Your guess was: " << Guess << std::endl;
@@ -81,7 +80,7 @@ FText GetValidGuess() //TODO Change to get valid guess
 		std::cout << "Please enter a " << BCGame.GetIsogramLength() << " letter word \n";
 		break;
 
-	case EGuessStatus::Not_Lowercase:
+	case EGuessStatus::Has_Upper:
 		std::cout << "Please use lowercase letters only \n";
 		break;
 
