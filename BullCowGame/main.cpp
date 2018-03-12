@@ -46,8 +46,6 @@ void PlayGame() {
 		std::cout << "Your guess was: " << Guess << std::endl;
 		std::cout << "Bulls = " << BullCowCount.Bulls << std::endl;
 		std::cout << "Cows = " << BullCowCount.Cows << std::endl << std::endl;
-		//std::cout << BCGame.SortGuess(Guess) << std::endl << std::endl;
-		//std::cout << IsValidIsogram.SortedGuess << std::endl;
 	}
 
 	//TODO Summarise Game
@@ -65,42 +63,47 @@ void PrintIntro() {
 //Loop continously until there is a valid guess
 FText GetValidGuess() //TODO Change to get valid guess
 {
-	int32 cTry = BCGame.GetCurrentTry();
-	std::cout << "Try " << cTry << ". Enter your guess, biiiiiiiiiiiiiiitc-: ";
+	EGuessStatus Status = EGuessStatus::Invalid;
 
-	FText Guess = "";
-	std::getline(std::cin, Guess);
+	do{
+		int32 cTry = BCGame.GetCurrentTry();
+		std::cout << "Try " << cTry << ". Enter your guess, biiiiiiiiiiiiiiitc-: ";
 
-	EGuessStatus Status = BCGame.CheckGuessValidity(Guess);
+		FText Guess = "";
+		std::getline(std::cin, Guess);
 
-	//submit valid guess to the game
-	switch (Status)
-	{
-	case EGuessStatus::Wrong_Length:
-		std::cout << "Please enter a " << BCGame.GetIsogramLength() << " letter word \n";
-		break;
+		Status = BCGame.CheckGuessValidity(Guess);
 
-	case EGuessStatus::Has_Upper:
-		std::cout << "Please use lowercase letters only \n";
-		break;
+		//submit valid guess to the game
+		switch (Status)
+		{
+		case EGuessStatus::Wrong_Length:
+			std::cout << "Please enter a " << BCGame.GetIsogramLength() << " letter word \n";
+			break;
 
-	case EGuessStatus::NO_K:
-		std::cout << "Please enter an isogram, all letters are unique \n";
-		break;
+		case EGuessStatus::Has_Upper:
+			std::cout << "Please use lowercase letters only \n";
+			break;
 
-	case EGuessStatus::Not_Characters:
-		std::cout << "Do not use symbols or numbers \n";
-		break;
+		case EGuessStatus::NO_K:
+			std::cout << "Please enter an isogram, all letters are unique \n";
+			break;
 
-	case EGuessStatus::OK:
-		std::cout << "Figure out where to put Submit \n";
-		break;
+		case EGuessStatus::Not_Characters:
+			std::cout << "Do not use symbols or numbers \n";
+			break;
 
-	default:
-		return Guess; 
-		break;
-	}
-	return Guess;
+		case EGuessStatus::OK:
+			std::cout << "Figure out where to put Submit \n";
+			return Guess;
+			break;
+
+		default:
+			return Guess;
+			break;
+		}
+		std::cout << std::endl;
+	} while (Status != EGuessStatus::OK); //Keep looping till we get no errors
 }
 
 bool AskToPlayAgain() {
